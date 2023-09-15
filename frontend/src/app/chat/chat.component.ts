@@ -1,23 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {
-  faEllipsisV,
-  faMicrophone,
-  faPaperPlane,
-  faSmile,
-} from '@fortawesome/free-solid-svg-icons';
+
+import { UserListComponent } from '../user-list/user-list.component';
+import { MessagesComponent } from '../messages/messages.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, MessagesComponent, UserListComponent],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css'],
 })
-export class ChatComponent {
-  faEllipsisV = faEllipsisV;
-  faSmile = faSmile;
-  faMicrophone = faMicrophone;
-  faPaperPlane = faPaperPlane;
-}
+export class ChatComponent {}
