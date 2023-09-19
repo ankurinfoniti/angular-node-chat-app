@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faComment, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faComment, faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-chat-list',
@@ -11,7 +11,7 @@ import { faComment, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./chat-list.component.css'],
 })
 export class ChatListComponent {
-  faEllipsisV = faEllipsisV;
+  faSignOut = faSignOut;
   faComment = faComment;
 
   @Output() showContact = new EventEmitter<boolean>();
@@ -19,4 +19,6 @@ export class ChatListComponent {
   showContactList() {
     this.showContact.emit(true);
   }
+
+  logout() {}
 }
