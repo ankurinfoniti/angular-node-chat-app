@@ -1,9 +1,20 @@
 <div class="back">
   <div class="div-center">
     <div class="content">
-      <h3>Login</h3>
+      <h3>Sign Up</h3>
       <hr />
-      <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Name"
+            formControlName="name"
+          />
+        </div>
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -12,7 +23,7 @@
             id="email"
             name="email"
             placeholder="Email"
-            ngModel
+            formControlName="email"
           />
         </div>
         <div class="form-group">
@@ -23,13 +34,13 @@
             id="password"
             name="password"
             placeholder="Password"
-            ngModel
+            formControlName="password"
           />
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary">Sign Up</button>
         <hr />
-        <button type="button" class="btn btn-link" [routerLink]="'/signup'">
-          Signup
+        <button type="button" class="btn btn-link" [routerLink]="'/login'">
+          Login
         </button>
         <!-- <button type="button" class="btn btn-link">Reset Password</button> -->
       </form>
