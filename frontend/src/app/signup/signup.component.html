@@ -15,6 +15,13 @@
             formControlName="name"
           />
         </div>
+        <ng-container
+          *ngIf="name && name.invalid && (name.dirty || name.touched)"
+        >
+          <p class="text-danger" *ngIf="name.errors?.['required']">
+            Name is required.
+          </p>
+        </ng-container>
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -26,6 +33,16 @@
             formControlName="email"
           />
         </div>
+        <ng-container
+          *ngIf="email && email.invalid && (email.dirty || email.touched)"
+        >
+          <p class="text-danger" *ngIf="email.errors?.['required']">
+            Email is required.
+          </p>
+          <p class="text-danger" *ngIf="email.errors?.['email']">
+            Email must be a valid email address.
+          </p>
+        </ng-container>
         <div class="form-group">
           <label for="password">Password</label>
           <input
@@ -37,7 +54,22 @@
             formControlName="password"
           />
         </div>
-        <button type="submit" class="btn btn-primary">Sign Up</button>
+        <ng-container
+          *ngIf="
+            password && password.invalid && (password.dirty || password.touched)
+          "
+        >
+          <p class="text-danger" *ngIf="password.errors?.['required']">
+            Password is required.
+          </p>
+        </ng-container>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="signupForm.invalid"
+        >
+          Sign Up
+        </button>
         <hr />
         <button type="button" class="btn btn-link" [routerLink]="'/login'">
           Login

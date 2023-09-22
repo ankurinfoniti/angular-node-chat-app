@@ -29,6 +29,18 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {}
 
+  get name() {
+    return this.signupForm.get('name');
+  }
+
+  get email() {
+    return this.signupForm.get('email');
+  }
+
+  get password() {
+    return this.signupForm.get('password');
+  }
+
   onSubmit() {
     if (this.signupForm.valid) {
       this.signupLoading = true;
