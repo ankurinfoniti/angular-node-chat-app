@@ -49,6 +49,7 @@ export class SignupComponent implements OnInit {
       this.autghService.signup(newUser).subscribe({
         next: (result) => {
           this.signupLoading = false;
+          this.signupForm.reset();
         },
         error: (err) => {
           this.signupLoading = false;
