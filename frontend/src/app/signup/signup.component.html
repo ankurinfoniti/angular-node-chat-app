@@ -3,6 +3,13 @@
     <div class="content">
       <h3>Sign Up</h3>
       <hr />
+
+      <app-form-message
+        *ngIf="signupResult.state"
+        [message]="signupResult.message"
+        [messageType]="signupResult.state"
+      ></app-form-message>
+
       <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="name">Name</label>

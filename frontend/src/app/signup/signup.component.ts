@@ -1,19 +1,25 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth/auth.service';
 import { User } from '../models/user.model';
+import { FormMessageComponent } from '../form-message/form-message.component';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    FormMessageComponent,
+  ],
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent {
   fb = inject(FormBuilder);
   autghService = inject(AuthService);
 
@@ -23,11 +29,10 @@ export class SignupComponent implements OnInit {
     password: ['', [Validators.required]],
   });
 
-  signupLoading = false;
-  emailValidating = false;
-  signupResult: any;
-
-  ngOnInit() {}
+  signupResult = {
+    message: '',
+    state: '',
+  };
 
   get name() {
     return this.signupForm.get('name');
@@ -43,16 +48,22 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if (this.signupForm.valid) {
-      this.signupLoading = true;
       const newUser = { ...this.signupForm.value } as User;
 
       this.autghService.signup(newUser).subscribe({
         next: (result) => {
-          this.signupLoading = false;
+          this.signupResult = {
+            message: result.message,
+            state: 'success',
+          };
           this.signupForm.reset();
         },
         error: (err) => {
-          this.signupLoading = false;
+          const { message } = err.error;
+          this.signupResult = {
+            message: message,
+            state: 'error',
+          };
         },
       });
     }
