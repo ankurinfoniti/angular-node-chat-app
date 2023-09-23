@@ -1,14 +1,17 @@
 const userService = require('../services/userService');
+const { hashPassword } = require('../util/hashing');
 
 exports.createUser = async (req, res) => {
   try {
+    const hashedPassword = await hashPassword(req.body.password);
+
     const userData = {
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
     };
 
-    userService.createUser(userData);
+    const user = await userService.createUser(userData);
 
     return res.json({ message: 'User created!!' });
   } catch (error) {
