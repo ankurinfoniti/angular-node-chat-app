@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { User } from '../models/user.model';
+import { Credentials } from '../models/credentials.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,23 @@ import { User } from '../models/user.model';
 export class AuthService {
   private http = inject(HttpClient);
 
+  login(credentials: Credentials): Observable<any> {
+    return this.http.post('/api/v1/users/login', { ...credentials });
+  }
+
   signup(user: User): Observable<any> {
     return this.http.post(`/api/v1/users`, { ...user });
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+  }
+
+  setToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
   }
 }

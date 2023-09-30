@@ -3,7 +3,14 @@
     <div class="content">
       <h3>Login</h3>
       <hr />
-      <form #f="ngForm" (ngSubmit)="onSubmit(f.value)">
+
+      <app-form-message
+        *ngIf="loginResult.state"
+        [message]="loginResult.message"
+        [messageType]="loginResult.state"
+      ></app-form-message>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="email">Email</label>
           <input
@@ -12,9 +19,19 @@
             id="email"
             name="email"
             placeholder="Email"
-            ngModel
+            formControlName="email"
           />
         </div>
+        <ng-container
+          *ngIf="email && email.invalid && (email.dirty || email.touched)"
+        >
+          <p class="text-danger" *ngIf="email.hasError('required')">
+            Email is required.
+          </p>
+          <p class="text-danger" *ngIf="email.hasError('email')">
+            Email must be a valid email address.
+          </p>
+        </ng-container>
         <div class="form-group">
           <label for="password">Password</label>
           <input
@@ -23,10 +40,25 @@
             id="password"
             name="password"
             placeholder="Password"
-            ngModel
+            formControlName="password"
           />
         </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+        <ng-container
+          *ngIf="
+            password && password.invalid && (password.dirty || password.touched)
+          "
+        >
+          <p class="text-danger" *ngIf="password.hasError('required')">
+            Password is required.
+          </p>
+        </ng-container>
+        <button
+          type="submit"
+          [disabled]="loginForm.invalid"
+          class="btn btn-primary"
+        >
+          Login
+        </button>
         <hr />
         <button type="button" class="btn btn-link" [routerLink]="'/signup'">
           Signup
