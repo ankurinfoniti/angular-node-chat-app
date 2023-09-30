@@ -12,11 +12,11 @@ export class AuthService {
   private http = inject(HttpClient);
 
   login(credentials: Credentials): Observable<any> {
-    return this.http.post('/api/v1/users/login', { ...credentials });
+    return this.http.post('/api/v1/user/login', { ...credentials });
   }
 
   signup(user: User): Observable<any> {
-    return this.http.post(`/api/v1/users`, { ...user });
+    return this.http.post(`/api/v1/user/signup`, { ...user });
   }
 
   logout() {

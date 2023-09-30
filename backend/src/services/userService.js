@@ -10,6 +10,14 @@ const getUser = async (email) => {
   }
 };
 
+const getAllUsers = async () => {
+  try {
+    return await User.find({}).sort({ name: 'asc' });
+  } catch (error) {
+    return error;
+  }
+};
+
 const createUser = async (userData) => {
   try {
     const newUser = new User(userData);
@@ -19,4 +27,4 @@ const createUser = async (userData) => {
   }
 };
 
-module.exports = { getUser, createUser };
+module.exports = { getAllUsers, getUser, createUser };
