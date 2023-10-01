@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { AuthService } from '../auth/auth.service';
-import { User } from '../models/user.model';
+import { LoginUser } from '../models/user.model';
 import { FormMessageComponent } from '../form-message/form-message.component';
 
 @Component({
@@ -48,7 +48,7 @@ export class SignupComponent {
 
   onSubmit() {
     if (this.signupForm.valid) {
-      const newUser = { ...this.signupForm.value } as User;
+      const newUser = { ...this.signupForm.value } as LoginUser;
 
       this.autghService.signup(newUser).subscribe({
         next: (result) => {
