@@ -32,7 +32,7 @@
 
   <!-- sideBar -->
   <div class="row compose-sideBar">
-    <ng-container *ngIf="contactList$ | async as contactList">
+    <ng-container *ngIf="contactList">
       <div class="row sideBar-body" *ngFor="let contact of contactList">
         <div class="col-sm-3 col-xs-3 sideBar-avatar">
           <div class="avatar-icon">
