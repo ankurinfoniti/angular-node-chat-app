@@ -28,6 +28,7 @@ import { User } from '../models/user.model';
 export class ContactListComponent implements OnChanges, OnInit {
   faArrowLeft = faArrowLeft;
   contactList!: User[];
+  contactListDuplicate!: User[];
 
   private destroyRef = inject(DestroyRef);
   private userService = inject(UserService);
@@ -41,6 +42,7 @@ export class ContactListComponent implements OnChanges, OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((result) => {
         this.contactList = result;
+        this.contactListDuplicate = this.contactList;
       });
   }
 
@@ -48,6 +50,20 @@ export class ContactListComponent implements OnChanges, OnInit {
     if (changes['showContact']['currentValue']) {
       this.showContactList();
     }
+  }
+
+  searchContact(event: Event) {
+    const value = (event.target as HTMLInputElement).value.trim();
+
+    this.contactList = [...this.contactListDuplicate];
+
+    if (value) {
+      this.contactList = this.contactList.filter((contact) =>
+        contact.name.toLowerCase().includes(value.toLowerCase())
+      );
+    } /* else {
+      this.contactList = [...this.contactListDuplicate];
+    } */
   }
 
   showContactList() {
