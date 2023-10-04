@@ -12,7 +12,9 @@ const getUser = async (email) => {
 
 const getAllUsers = async () => {
   try {
-    return await User.find({}).sort({ name: 'asc' });
+    return await User.find({})
+      .select('_id name email lastLogin')
+      .sort({ name: 'asc' });
   } catch (error) {
     return error;
   }
@@ -21,7 +23,8 @@ const getAllUsers = async () => {
 const createUser = async (userData) => {
   try {
     const newUser = new User(userData);
-    await newUser.save();
+
+    return await newUser.save();
   } catch (error) {
     return error;
   }
