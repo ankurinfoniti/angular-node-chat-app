@@ -27,4 +27,12 @@ const createUser = async (userData) => {
   }
 };
 
-module.exports = { getAllUsers, getUser, createUser };
+const updateLastLogin = async (id) => {
+  try {
+    return await User.findOneAndUpdate({ _id: id }, { lastLogin: new Date() });
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAllUsers, getUser, createUser, updateLastLogin };

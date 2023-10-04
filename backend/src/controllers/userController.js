@@ -21,6 +21,9 @@ exports.postAuthenticate = async (req, res) => {
 
     const token = createToken(user);
 
+    // update last login
+    await userService.updateLastLogin(user._id);
+
     return res.json({ message: 'Authentication successful!', token });
   } catch (error) {
     console.log(error);
