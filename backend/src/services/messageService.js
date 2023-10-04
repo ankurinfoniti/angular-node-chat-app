@@ -20,10 +20,14 @@ const getMessageUsers = async (senderId) => {
       'receiverId'
     );
 
+    const senderIds = await Message.find({ receiverId: senderId }).distinct(
+      'senderId'
+    );
+
     return await User.find()
       .select('_id name email lastLogin')
       .where('_id')
-      .in(receiverIds);
+      .in([...senderIds, ...receiverIds]);
   } catch (error) {
     return error;
   }
