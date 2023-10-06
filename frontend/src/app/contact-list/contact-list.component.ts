@@ -61,9 +61,7 @@ export class ContactListComponent implements OnChanges, OnInit {
       this.contactList = this.contactList.filter((contact) =>
         contact.name.toLowerCase().includes(value.toLowerCase())
       );
-    } /* else {
-      this.contactList = [...this.contactListDuplicate];
-    } */
+    }
   }
 
   showContactList() {
