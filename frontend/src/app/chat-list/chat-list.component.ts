@@ -46,6 +46,10 @@ export class ChatListComponent implements OnInit {
     }
   }
 
+  selectUser(user: LoggedInUser) {
+    this.messageService.setSelectedUser(user);
+  }
+
   showContactList() {
     this.showContact.emit(true);
   }

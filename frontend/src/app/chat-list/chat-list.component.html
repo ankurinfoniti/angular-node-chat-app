@@ -46,7 +46,11 @@
   <!-- Search Box End -->
   <!-- sideBar -->
   <div class="row sideBar">
-    <div class="row sideBar-body" *ngFor="let user of userLists">
+    <div
+      class="row sideBar-body"
+      *ngFor="let user of userLists"
+      (click)="selectUser(user)"
+    >
       <div class="col-sm-3 col-xs-3 sideBar-avatar">
         <div class="avatar-icon">
           <img src="/assets/images/man-profile.png" />

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 
-import { LoginUser, tokenUser } from '../models/user.model';
+import { LoginUser, TokenUser } from '../models/user.model';
 import { Credentials } from '../models/credentials.model';
 
 @Injectable({
@@ -32,7 +32,7 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  decodeToken(token: string): tokenUser {
+  decodeToken(token: string): TokenUser {
     return jwt_decode(token);
   }
 }

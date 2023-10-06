@@ -15,7 +15,8 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { UserService } from '../services/user.service';
-import { User } from '../models/user.model';
+import { LoggedInUser } from '../models/user.model';
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -26,11 +27,12 @@ import { User } from '../models/user.model';
 })
 export class ContactListComponent implements OnChanges, OnInit {
   faArrowLeft = faArrowLeft;
-  contactList!: User[];
-  contactListDuplicate!: User[];
+  contactList!: LoggedInUser[];
+  contactListDuplicate!: LoggedInUser[];
 
   private destroyRef = inject(DestroyRef);
   private userService = inject(UserService);
+  private messageService = inject(MessageService);
 
   @Input('showContact') showContact = false;
   @ViewChild('sideTwo') sideTwo!: ElementRef;
@@ -61,6 +63,10 @@ export class ContactListComponent implements OnChanges, OnInit {
         contact.name.toLowerCase().includes(value.toLowerCase())
       );
     }
+  }
+
+  selectUser(user: LoggedInUser) {
+    this.messageService.setSelectedUser(user);
   }
 
   showContactList() {
