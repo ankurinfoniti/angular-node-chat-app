@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { LoggedInUser, TokenUser } from '../models/user.model';
 
@@ -7,6 +7,9 @@ import { LoggedInUser, TokenUser } from '../models/user.model';
   providedIn: 'root',
 })
 export class MessageService {
+  private selectedUser = signal<TokenUser>(this.getUser());
+  getSelectedUser = computed(() => this.selectedUser());
+
   private http = inject(HttpClient);
 
   getMessageUsers() {
@@ -21,15 +24,16 @@ export class MessageService {
     };
 
     localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+    this.selectedUser.set(selectedUser);
   }
 
-  getSelectedUser(): TokenUser | null {
-    let selectedUser = localStorage.getItem('selectedUser');
+  getUser(): TokenUser {
+    /* let selectedUser = localStorage.getItem('selectedUser');
 
     if (selectedUser) {
       return JSON.parse(selectedUser);
-    }
+    } */
 
-    return null;
+    return { id: '', name: '', email: '' };
   }
 }

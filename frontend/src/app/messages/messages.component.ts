@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
@@ -7,6 +7,8 @@ import {
   faPaperPlane,
   faSmile,
 } from '@fortawesome/free-solid-svg-icons';
+
+import { MessageService } from '../services/message.service';
 
 @Component({
   selector: 'app-messages',
@@ -20,4 +22,7 @@ export class MessagesComponent {
   faSmile = faSmile;
   faMicrophone = faMicrophone;
   faPaperPlane = faPaperPlane;
+
+  private messageService = inject(MessageService);
+  selectedUser = this.messageService.getSelectedUser;
 }
