@@ -51,7 +51,8 @@ exports.createUser = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await userService.getAllUsers();
+    const id = req.body.id;
+    const users = await userService.getAllUsers(id);
 
     return res.json(users);
   } catch (error) {

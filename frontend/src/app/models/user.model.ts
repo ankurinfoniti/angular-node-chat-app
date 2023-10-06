@@ -11,3 +11,9 @@ export interface LoggedInUser extends User {
   _id: string;
   lastLogin: string;
 }
+
+export interface tokenUser {
+  id: string;
+  name: string;
+  email: string;
+}

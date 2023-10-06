@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import jwt_decode from 'jwt-decode';
 
-import { LoginUser } from '../models/user.model';
+import { LoginUser, tokenUser } from '../models/user.model';
 import { Credentials } from '../models/credentials.model';
 
 @Injectable({
@@ -29,5 +30,9 @@ export class AuthService {
 
   getToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  decodeToken(token: string): tokenUser {
+    return jwt_decode(token);
   }
 }

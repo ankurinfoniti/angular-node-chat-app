@@ -10,9 +10,9 @@ const getUser = async (email) => {
   }
 };
 
-const getAllUsers = async () => {
+const getAllUsers = async (id) => {
   try {
-    return await User.find({})
+    return await User.find({ _id: { $ne: id } })
       .select('_id name email lastLogin')
       .sort({ name: 'asc' });
   } catch (error) {
