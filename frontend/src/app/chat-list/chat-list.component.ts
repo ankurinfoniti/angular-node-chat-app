@@ -20,6 +20,7 @@ export class ChatListComponent implements OnInit {
   faSignOut = faSignOut;
   faComment = faComment;
   userLists!: LoggedInUser[];
+  userListsDuplicate!: LoggedInUser[];
   messageService = inject(MessageService);
   authService = inject(AuthService);
   router = inject(Router);
@@ -29,7 +30,20 @@ export class ChatListComponent implements OnInit {
   ngOnInit(): void {
     this.messageService.getMessageUsers().subscribe((result) => {
       this.userLists = result;
+      this.userListsDuplicate = result;
     });
+  }
+
+  searchContact(event: Event) {
+    const value = (event.target as HTMLInputElement).value.trim();
+
+    this.userLists = [...this.userListsDuplicate];
+
+    if (value) {
+      this.userLists = this.userLists.filter((contact) =>
+        contact.name.toLowerCase().includes(value.toLowerCase())
+      );
+    }
   }
 
   showContactList() {
