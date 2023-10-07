@@ -25,25 +25,30 @@
 <div class="row message" id="conversation" #conversation>
   <div class="row message-previous" *ngIf="selectedUser().id">
     <div class="col-sm-12 previous">
-      <a> Show Previous Message! </a>
+      <a *ngIf="!messageEnd" (click)="showPreviousMessage()">
+        Show Previous Message!
+      </a>
     </div>
   </div>
 
   <ng-container *ngIf="selectedUser().id">
-    <div class="row message-body">
-      <div class="col-sm-12 message-main-receiver">
-        <div class="receiver">
-          <div class="message-text">Hyy, Its Awesome..!</div>
-          <span class="message-time pull-right"> Sun </span>
-        </div>
-      </div>
-    </div>
-
-    <div class="row message-body">
-      <div class="col-sm-12 message-main-sender">
-        <div class="sender">
-          <div class="message-text">Thanks n I know its awesome...!</div>
-          <span class="message-time pull-right"> Sun </span>
+    <div class="row message-body" *ngFor="let message of messageList">
+      <div
+        class="col-sm-12 {{
+          loggedInUser.id === message.receiverId
+            ? 'message-main-receiver'
+            : 'message-main-sender'
+        }}"
+      >
+        <div
+          class="{{
+            loggedInUser.id === message.receiverId ? 'receiver' : 'sender'
+          }}"
+        >
+          <div class="message-text">{{ message.message }}</div>
+          <span class="message-time pull-right">
+            {{ message.insertedAt | loginTime }}
+          </span>
         </div>
       </div>
     </div>

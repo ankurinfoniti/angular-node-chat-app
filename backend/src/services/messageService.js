@@ -3,10 +3,16 @@ const User = require('../models/user');
 
 const getAllMessage = async (senderId, receiverId, page) => {
   try {
-    const limit = 2;
+    const limit = 5;
     const skip = (page - 1) * limit;
 
-    return await Message.find({ senderId: senderId, receiverId: receiverId })
+    return await Message.find({
+      $or: [
+        { $and: [{ senderId: senderId, receiverId: receiverId }] },
+        { $and: [{ senderId: receiverId, receiverId: senderId }] },
+      ],
+    })
+      .sort({ _id: -1 })
       .skip(skip)
       .limit(limit);
   } catch (error) {

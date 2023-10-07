@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { LoggedInUser, TokenUser } from '../models/user.model';
+import { Message } from '../models/message.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
-  private page = signal<number>(1);
-  private selectedUser = signal<TokenUser>(this.getUser());
+  private page = signal<number>(0);
+  private selectedUser = signal<TokenUser>({ id: '', name: '', email: '' });
   getSelectedUser = computed(() => this.selectedUser());
 
   private http = inject(HttpClient);
@@ -20,9 +21,11 @@ export class MessageService {
       email: user.email,
     };
 
-    localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
-    this.selectedUser.set(selectedUser);
-    this.page.set(1);
+    if (this.selectedUser().id !== selectedUser.id) {
+      localStorage.setItem('selectedUser', JSON.stringify(selectedUser));
+      this.selectedUser.set(selectedUser);
+      this.resetPage();
+    }
   }
 
   getUser(): TokenUser {
@@ -31,6 +34,10 @@ export class MessageService {
 
   setPage(count: number) {
     this.page.update((page) => page + count);
+  }
+
+  resetPage() {
+    this.page.set(0);
   }
 
   saveMessage(message: string) {
@@ -47,6 +54,13 @@ export class MessageService {
   }
 
   getMessages() {
-    //return this.http.post('/api/v1/messages');
+    this.setPage(1);
+
+    const data = {
+      receiverId: this.selectedUser().id,
+      page: this.page(),
+    };
+
+    return this.http.post<Message[]>('/api/v1/messages', data);
   }
 }
