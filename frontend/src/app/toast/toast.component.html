@@ -1,0 +1,15 @@
+<ul class="notifications">
+  <ng-container *ngFor="let toast of toastList">
+    <li class="toast {{ toast.type }}">
+      <div class="column">
+        <fa-icon [icon]="setIcon(toast.type)" class="fa-2x"></fa-icon>
+        <span>{{ toast.message }}</span>
+      </div>
+      <fa-icon
+        [icon]="faXmark"
+        class="fa-2x"
+        (click)="removeToast(toast.id)"
+      ></fa-icon>
+    </li>
+  </ng-container>
+</ul>

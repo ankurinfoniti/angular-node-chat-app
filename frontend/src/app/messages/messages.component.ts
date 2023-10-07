@@ -19,6 +19,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { MessageService } from '../services/message.service';
+import { ToastService } from '../toast/toast.service';
 
 @Component({
   selector: 'app-messages',
@@ -36,6 +37,7 @@ export class MessagesComponent {
 
   private destroyRef = inject(DestroyRef);
   private messageService = inject(MessageService);
+  private toast = inject(ToastService);
 
   selectedUser = this.messageService.getSelectedUser;
   selectedUser$ = toObservable(this.selectedUser);
@@ -54,7 +56,6 @@ export class MessagesComponent {
     this.message = this.message.trim();
 
     if (this.message) {
-      //this.message = '';
       this.messageService
         .saveMessage(this.message)
         .pipe(
@@ -68,7 +69,7 @@ export class MessagesComponent {
           error: (error: HttpErrorResponse) => {
             if (error.status === 400) {
               console.log(error);
-              //this.toastr.error(error.error.message, 'Error');
+              this.toast.error(error.error.message);
             }
           },
         });
