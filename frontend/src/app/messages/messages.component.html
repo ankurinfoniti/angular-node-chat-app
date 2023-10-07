@@ -22,12 +22,10 @@
 <!-- Heading End -->
 
 <!-- Message Box -->
-<div class="row message" id="conversation">
+<div class="row message" id="conversation" #conversation>
   <div class="row message-previous" *ngIf="selectedUser().id">
     <div class="col-sm-12 previous">
-      <a onclick="previous(this)" id="ankitjain28" name="20">
-        Show Previous Message!
-      </a>
+      <a> Show Previous Message! </a>
     </div>
   </div>
 
@@ -58,14 +56,20 @@
   <div class="col-sm-1 col-xs-1 reply-emojis">
     <fa-icon [icon]="faSmile" class="fa-2x"></fa-icon>
   </div>
-  <div class="col-sm-9 col-xs-9 reply-main">
-    <textarea class="form-control" rows="1" id="comment"></textarea>
+  <div class="col-sm-10 col-xs-10 reply-main">
+    <input
+      type="text"
+      class="form-control"
+      id="comment"
+      (keyup.enter)="saveMessage()"
+      [(ngModel)]="message"
+    />
   </div>
   <div class="col-sm-1 col-xs-1 reply-recording">
     <fa-icon [icon]="faMicrophone" class="fa-2x"></fa-icon>
   </div>
-  <div class="col-sm-1 col-xs-1 reply-send">
+  <!-- <div class="col-sm-1 col-xs-1 reply-send">
     <fa-icon [icon]="faPaperPlane" class="fa-2x"></fa-icon>
-  </div>
+  </div> -->
 </div>
 <!-- Reply Box End -->
