@@ -57,10 +57,18 @@ export class MessagesComponent {
 
     if (token) {
       this.loggedInUser = this.authService.decodeToken(token);
+
+      this.messageService
+        .getSocketIo(this.loggedInUser.email)
+        .on('chat', (data) => {
+          this.messageList.push(data);
+          setTimeout(() => {
+            this.scrollToBottom();
+          }, 0);
+        });
     }
 
     this.selectedUser$.subscribe((result) => {
-      console.log(result);
       if (result.id) {
         this.messageList = [];
         this.getMessages();
@@ -79,9 +87,7 @@ export class MessagesComponent {
           tap(() => (this.message = ''))
         )
         .subscribe({
-          next: (result) => {
-            console.log(result);
-          },
+          next: (result) => {},
           error: (error: HttpErrorResponse) => {
             if (error.status === 400) {
               console.log(error);

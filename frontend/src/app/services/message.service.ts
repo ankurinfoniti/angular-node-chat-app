@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
+import { io } from 'socket.io-client';
 
 import { LoggedInUser, TokenUser } from '../models/user.model';
 import { Message } from '../models/message.model';
@@ -8,11 +9,16 @@ import { Message } from '../models/message.model';
   providedIn: 'root',
 })
 export class MessageService {
+  private http = inject(HttpClient);
   private page = signal<number>(0);
   private selectedUser = signal<TokenUser>({ id: '', name: '', email: '' });
   getSelectedUser = computed(() => this.selectedUser());
 
-  private http = inject(HttpClient);
+  getSocketIo(email: string) {
+    return io('http://localhost:3000', {
+      auth: { email },
+    });
+  }
 
   setSelectedUser(user: LoggedInUser) {
     const selectedUser = {
@@ -46,11 +52,13 @@ export class MessageService {
       receiverId: this.selectedUser().id,
     };
 
-    return this.http.post('/api/v1/messages/save', data);
+    return this.http.post('http://localhost:3000/api/v1/messages/save', data);
   }
 
   getMessageUsers() {
-    return this.http.get<LoggedInUser[]>('/api/v1/messages/users');
+    return this.http.get<LoggedInUser[]>(
+      'http://localhost:3000/api/v1/messages/users'
+    );
   }
 
   getMessages() {
@@ -61,6 +69,9 @@ export class MessageService {
       page: this.page(),
     };
 
-    return this.http.post<Message[]>('/api/v1/messages', data);
+    return this.http.post<Message[]>(
+      'http://localhost:3000/api/v1/messages',
+      data
+    );
   }
 }

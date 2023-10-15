@@ -13,11 +13,15 @@ export class AuthService {
   private http = inject(HttpClient);
 
   login(credentials: Credentials): Observable<any> {
-    return this.http.post('/api/v1/user/login', { ...credentials });
+    return this.http.post('http://localhost:3000/api/v1/user/login', {
+      ...credentials,
+    });
   }
 
   signup(user: LoginUser): Observable<any> {
-    return this.http.post(`/api/v1/user/signup`, { ...user });
+    return this.http.post(`http://localhost:3000/api/v1/user/signup`, {
+      ...user,
+    });
   }
 
   logout() {

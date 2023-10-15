@@ -1,4 +1,5 @@
 const messageService = require('../services/messageService');
+const { Socket } = require('../util/socket');
 
 const getAllMessage = async (req, res) => {
   try {
@@ -43,6 +44,8 @@ const saveMessage = async (req, res) => {
       receiverId,
       message,
     });
+
+    Socket.emit('chat', messageData);
 
     return res.json(messageData);
   } catch (error) {

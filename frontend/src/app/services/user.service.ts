@@ -21,6 +21,9 @@ export class UserService {
       loggedInUser = this.auth.decodeToken(token);
     }
 
-    return this.http.post<LoggedInUser[]>('/api/v1/users', { ...loggedInUser });
+    return this.http.post<LoggedInUser[]>(
+      'http://localhost:3000/api/v1/users',
+      { ...loggedInUser }
+    );
   }
 }
